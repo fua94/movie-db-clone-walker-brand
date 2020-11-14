@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,8 @@ Route::get('/', function () {
     $movies = json_decode($response->getBody(), true);
 
     return view('welcome', [
-		'movies' => array_slice($movies['results'], 0, 8)
-	]);
+      'movies' => array_slice($movies['results'], 0, 8)
+    ]);
 });
 
 Route::get('/movie/{movie_id}', function ($movie_id) {
@@ -28,6 +29,16 @@ Route::get('/movie/{movie_id}', function ($movie_id) {
     $movie = json_decode($response->getBody(), true);
 
     return view('movie', [
-		'movie' => $movie
-	]);
+      'movie' => $movie
+    ]);
 });
+
+Route::post('/movie/search', function (Request $request) {
+    $query = $request->query_str;
+    $response = Http::get('https://api.themoviedb.org/3/search/movie?api_key='.env('MOVIE_DB_API_KEY').'&query='.$query.'&include_adult=false');
+    $movies = json_decode($response->getBody(), true);
+
+    return view('welcome', [
+      'movies' => array_slice($movies['results'], 0, 8)
+    ]);
+})->name('movies.search');
