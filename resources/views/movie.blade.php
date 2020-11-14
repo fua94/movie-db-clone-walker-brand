@@ -30,7 +30,9 @@
     </div>
     <div id="description" class="col-md-8 col-12 d-flex flex-column justify-content-center">
       <h1 class="text-light font-weight-bold">{{$movie->original_title}} <span class="text-muted font-weight-bold">({{substr($movie->release_date, 0, 4)}})</span></h1>
-      <h4 class="font-italic text-light">"{{$movie->tagline}}"</h4>
+      @if(!empty($movie->tagline))
+        <h4 class="font-italic text-light">"{{$movie->tagline}}"</h4>
+      @endif
       <h2 class="text-light font-weight-bold">Overview</h2>
       <p class="text-light text-justify">{{$movie->overview}} </p>
       <span class="badge badge-success w-25">{{$movie->vote_average}}/10</span>
