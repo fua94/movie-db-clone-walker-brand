@@ -177,6 +177,14 @@
   }
 </style>
 
+<style>
+  #main {
+    max-width: auto !important;
+    min-width: auto !important;
+    width: auto !important;
+  }
+</style>
+
 <main id="main" class="index">
     @yield('content')
 </main>
